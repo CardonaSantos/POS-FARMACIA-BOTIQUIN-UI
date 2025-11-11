@@ -18,7 +18,6 @@ import Sucursales from "./Pages/Sucursal/Sucursales";
 import TransferenciaProductos from "./Pages/Transferencia/TransferenciaProductos";
 import TransferenciaProductosHistorial from "./Pages/Transferencia/TransferenciaHistorial";
 import HistorialCambiosPrecio from "./Pages/HistorialPrecios/HistorialCambiosPrecio";
-import StockEdicion from "./Pages/StockEdicion/StockEdicion";
 import StockEliminaciones from "./Pages/Eliminaciones/StockEliminaciones";
 import GarantiaPage from "./components/PDF/GarantiaPage";
 import CreateCustomer from "./Pages/Customers/CreateCustomer";
@@ -85,6 +84,7 @@ import CreditoDetails from "./Pages/creditos/components/credito-details";
 import ProductEditorContainer from "./Pages/newCreateProduct/ProductEditorContainer";
 import TiposPresentaciones from "./Pages/tipos-presentaciones/tipos-presentaciones-main-page";
 import ProveedoresPage from "./Pages/Provider/AgregarProveedor";
+import StockEditing from "./Pages/InventarioYStock/EditStock/StockEditing";
 
 function App() {
   const { checkAuth } = useAuthStore();
@@ -308,10 +308,10 @@ function App() {
             />
 
             <Route
-              path="/stock-edicion/:id"
+              path="/stock-edit/:id"
               element={
                 <ProtectRouteAdmin>
-                  <StockEdicion />
+                  <StockEditing />
                 </ProtectRouteAdmin>
               }
             />
