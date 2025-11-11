@@ -359,20 +359,6 @@ export default function DashboardPageMain() {
     }
   };
 
-  const getSolicitudesTransferencia = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/solicitud-transferencia-producto`
-      );
-      if (response.status === 200) {
-        // manejar si es necesario
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Error al conseguir solicitudes de transferencia");
-    }
-  };
-
   const getWarranties = async () => {
     try {
       const response = await axios.get(
@@ -408,7 +394,6 @@ export default function DashboardPageMain() {
 
   useEffect(() => {
     getSolicitudes();
-    getSolicitudesTransferencia();
     getWarranties();
     getReparacionesRegis();
   }, []);
@@ -423,8 +408,6 @@ export default function DashboardPageMain() {
 
   useSocketEvent("recibirSolicitudTransferencia", (s: any) => {
     console.log("La solicitud de transferencia es: ", s);
-
-    // if (s) invalidatePriceReqDebounced();
     queryClient.invalidateQueries({
       queryKey: TRANSFER_REQUESTS_QK(sucursalId),
     });
@@ -509,8 +492,10 @@ export default function DashboardPageMain() {
         userID,
       });
       toast.success("Tranferencia completada");
-      getSolicitudesTransferencia();
-      queryClient.invalidateQueries({ queryKey: TRANSFER_REQUESTS_QK() });
+      // queryClient.invalidateQueries({ queryKey: TRANSFER_REQUESTS_QK() });
+      queryClient.invalidateQueries({
+        queryKey: TRANSFER_REQUESTS_QK(sucursalId),
+      });
     } catch (error) {
       console.error("Error al aceptar la transferencia:", error);
       toast.error("Error");
@@ -526,8 +511,9 @@ export default function DashboardPageMain() {
       );
       if (response.status === 200) {
         toast.warning("Solicitud de transferencia rechazada");
-        getSolicitudesTransferencia();
-        queryClient.invalidateQueries({ queryKey: TRANSFER_REQUESTS_QK() });
+        queryClient.invalidateQueries({
+          queryKey: TRANSFER_REQUESTS_QK(sucursalId),
+        });
       }
     } catch (error) {
       console.error("Error al aceptar la transferencia:", error);
@@ -795,6 +781,33 @@ export default function DashboardPageMain() {
 
       {/* MOSTRAR LOS CRÉDITOS VENTAS ACTIVOS */}
       <CreditCardList credits={credits} />
+
+      {/* Gráfico de ventas */}
+      <SalesChartCard ventasSemanalChart={ventasSemanalChart} />
+      {/* Productos e inventario */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <TopSellingProductsTable masVendidos={masVendidos} />
+        <RecentTransactionsTable
+          transaccionesRecientes={transaccionesRecientes}
+          formatearFecha={formatearFecha}
+        />
+      </div>
+      {/* MOSTRAS LAS SOLICITUDES DE TRANSFERENCIA */}
+      <TransferRequestList
+        solicitudesTransferencia={solicitudesTransferencia}
+        handleAceptarTransferencia={handleAceptarTransferencia}
+        handleRejectTransferencia={handleRejectTransferencia}
+        formatearFecha={formatearFecha}
+      />
+
+      {/* MOSTRAR LAS SOLICITUDES DE PRECIO */}
+      <PriceRequestList
+        solicitudes={solicitudes}
+        handleAceptRequest={handleAceptRequest}
+        handleRejectRequest={handleRejectRequest}
+        formatearFecha={formatearFecha}
+      />
+
       {/* MOSTRAR LAS REPARACIONES ACTIVAS */}
       <RepairCardList
         reparaciones={reparaciones}
@@ -823,20 +836,7 @@ export default function DashboardPageMain() {
         warrantyId={warrantyId}
         handleCreateNewTimeLine={handleCreateNewTimeLine}
       />
-      {/* MOSTRAR LAS SOLICITUDES DE PRECIO */}
-      <PriceRequestList
-        solicitudes={solicitudes}
-        handleAceptRequest={handleAceptRequest}
-        handleRejectRequest={handleRejectRequest}
-        formatearFecha={formatearFecha}
-      />
-      {/* MOSTRAS LAS SOLICITUDES DE TRANSFERENCIA */}
-      <TransferRequestList
-        solicitudesTransferencia={solicitudesTransferencia}
-        handleAceptarTransferencia={handleAceptarTransferencia}
-        handleRejectTransferencia={handleRejectTransferencia}
-        formatearFecha={formatearFecha}
-      />
+
       {/* MOSTRAR DIALOG DE ACTUALIZAR REGISTRO DE GARANTÍA */}
       <UpdateWarrantyDialog
         open={openUpdateWarranty}
@@ -863,16 +863,6 @@ export default function DashboardPageMain() {
         setAccionesRealizadas={setAccionesRealizadas}
         handleSubmitFinishRegistW={handleSubmitFinishRegistW}
       />
-      {/* Gráfico de ventas */}
-      <SalesChartCard ventasSemanalChart={ventasSemanalChart} />
-      {/* Productos e inventario */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <TopSellingProductsTable masVendidos={masVendidos} />
-        <RecentTransactionsTable
-          transaccionesRecientes={transaccionesRecientes}
-          formatearFecha={formatearFecha}
-        />
-      </div>
     </motion.div>
   );
 }

@@ -759,6 +759,7 @@ export const makeColumnsInventario = (
                 <Dialog>
                   <DialogTrigger asChild>
                     <DropdownMenuItem
+                      disabled
                       className="text-red-600 focus:text-red-700 flex items-center gap-2"
                       onSelect={(e) => e.preventDefault()}
                     >

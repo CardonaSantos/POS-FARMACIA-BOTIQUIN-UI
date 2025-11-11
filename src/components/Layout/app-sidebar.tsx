@@ -1,6 +1,5 @@
 import {
   Home,
-  ShieldCheck,
   // Ticket,
   Wallet,
 
@@ -21,10 +20,8 @@ import {
   UserCheck,
   Factory,
   Building2,
-  Shield,
   BarChart3,
   Calendar,
-  Wrench,
   Settings,
   ChartPie,
   ReceiptText,
@@ -184,14 +181,14 @@ const menuItemsAdmin = [
   },
 
   // === Garantías y Tickets ===
-  {
-    icon: ShieldCheck,
-    label: "Garantías",
-    submenu: [
-      { icon: Shield, label: "Gestión Garantías", href: "/garantia/manage" },
-      // { icon: Ticket, label: "Gestión Tickets", href: "/ticket/manage" },
-    ],
-  },
+  // {
+  //   icon: ShieldCheck,
+  //   label: "Garantías",
+  //   submenu: [
+  //     { icon: Shield, label: "Gestión Garantías", href: "/garantia/manage" },
+  //     // { icon: Ticket, label: "Gestión Tickets", href: "/ticket/manage" },
+  //   ],
+  // },
 
   // === Caja ===
   {
@@ -272,7 +269,7 @@ const menuItemsAdmin = [
 
   // === Operaciones ===
   { icon: AlertCircle, label: "Vencimientos", href: "/vencimientos" },
-  { icon: Wrench, label: "Reparaciones", href: "/reparaciones" },
+  // { icon: Wrench, label: "Reparaciones", href: "/reparaciones" },
 
   // === Metas ===
   { icon: Target, label: "Metas", href: "/metas" },
