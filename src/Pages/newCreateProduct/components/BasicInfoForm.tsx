@@ -120,7 +120,6 @@ export default function BasicInfoForm({
               getValue={(t) => t.id}
               value={value.tipoPresentacion ?? null}
               onChange={(opt) =>
-                // ✅ una sola actualización con ambos campos
                 patch({
                   tipoPresentacionId: opt ? opt.id : null,
                   tipoPresentacion: opt ?? null,
