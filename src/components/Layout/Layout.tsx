@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import logo from "@/assets/FARMACIALOGO.png";
+import logo from "@/assets/FMHERNANDEZ.png";
 import { useNotificationsRealtime } from "@/Web/realtime/notifications/usenot";
 import {
   useApiMutation,
